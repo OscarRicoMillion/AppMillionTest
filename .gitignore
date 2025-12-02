@@ -1,0 +1,70 @@
+# App iOS compilada - NO subir
+App/
+*.app
+*.ipa
+
+# Build de .NET
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+*.cache
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# NuGet
+packages/
+*.nupkg
+
+# Reqnroll generated files
+*.feature.cs
+*.feature.ndjson
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+*.log
+
+# Secrets
+appsettings.*.json
+*.env
+*.secret
+GoogleService-Info.plist
+
+# Git
+.gitattributes
+.gitkeep
+
+# System
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Visual Studio
+*.vcxproj.user
