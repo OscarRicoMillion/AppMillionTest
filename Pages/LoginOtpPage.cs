@@ -24,7 +24,15 @@ namespace AppMillionTest.Pages
         {
             var otpBoxes = driver.FindElement(MobileBy.IosClassChain("**/XCUIElementTypeOther[`visible == 1`]"));
 
-            otpBoxes.SendKeys(codigo);
+
+
+            otpBoxes.SendKeys(codigo.Substring(0, 1));
+
+            // Enviar el resto de la cadena de golpe
+            if (codigo.Length > 1)
+            {
+                otpBoxes.SendKeys(codigo.Substring(1));
+            }
         }
     }
 }

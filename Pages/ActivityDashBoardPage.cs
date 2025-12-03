@@ -27,7 +27,7 @@ namespace AppMillionTest.Pages
             var noteInput = driver.FindElement(MobileBy.AccessibilityId("Write a note"));
             noteInput.Clear();
             noteInput.SendKeys(note);
-            Thread.Sleep(1000);
+            
         }
 
         public void ClickSaveNotes()

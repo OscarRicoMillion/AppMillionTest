@@ -7,7 +7,7 @@ namespace AppMillionTest.Drivers
     /// Fábrica para la sesión iOS Appium. Controla creación, cierre y relanzamiento de apps.
     /// </summary>
     public static class IOSDriverFactory
-    {   
+    {
         // Instancia del driver iOS
         private static IOSDriver? _driver;
 
@@ -26,7 +26,7 @@ namespace AppMillionTest.Drivers
         /// Inicia una sesión Appium si no existe.
         /// </summary>
         public static void StartSession()
-        {   
+        {
             // Si ya hay un driver, no hagas nada
             if (_driver != null)
                 return;
@@ -55,12 +55,13 @@ namespace AppMillionTest.Drivers
             // � Mantén la sesión viva entre escenarios
             options.AddAdditionalAppiumOption("noReset", false);
             options.AddAdditionalAppiumOption("useNewWDA", false); // ⚡️ evita recompilar WDA            
-            options.AddAdditionalAppiumOption("autoDismissAlerts", true);          
-           
+            options.AddAdditionalAppiumOption("autoDismissAlerts", true);
+
             // Otras opciones útiles
             options.AddAdditionalAppiumOption("newCommandTimeout", 300);
             options.AddAdditionalAppiumOption("wdaLaunchTimeout", 60000);
             options.AddAdditionalAppiumOption("wdaConnectionTimeout", 60000);
+            options.AddAdditionalAppiumOption("connectHardwareKeyboard", true);
             options.AddAdditionalAppiumOption("wdaStartupRetries", 3);
             options.AddAdditionalAppiumOption("wdaStartupRetryInterval", 5000);
             options.AddAdditionalAppiumOption("reduceMotion", true);

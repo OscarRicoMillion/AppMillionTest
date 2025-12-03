@@ -10,12 +10,11 @@ namespace AppMillionTest.Pages
     public class LeadDetailPage
     {
         private readonly IOSDriver driver;
-        private readonly AlertActions alertActions;
 
         public LeadDetailPage(IOSDriver driver)
         {
             this.driver = driver;
-            this.alertActions = new AlertActions(driver);
+         
         }
 
         public void ClickAddActivityIcon()
