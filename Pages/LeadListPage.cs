@@ -27,6 +27,7 @@ namespace AppMillionTest.Pages
 
         public void ClickFirstLead()
         {
+            Thread.Sleep(20000);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
             var element = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("get_LeadDetail")));
             element.Click();

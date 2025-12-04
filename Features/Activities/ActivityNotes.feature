@@ -1,11 +1,12 @@
 Feature: Activity Notes Features
 
   @notes
+  @DataSource:../../DataSource/UserInformation.csv
   Scenario: Crear una nota regular
     Given el usuario abre la app Million
-    When ingresa el nombre de usuario "calidadagente"
+    When ingresa el nombre de usuario "<user>"
     And selecciona el boton continue
-    When ingresa el OTP "1111"
+    When ingresa el OTP "<OtpCode>"
     Then se debe cargar el listado de leads con el icono de usuario visible
     When Selecciona un lead de la lista
     And selecciona el icono add para agregar una actividad

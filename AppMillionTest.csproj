@@ -17,6 +17,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
     <PackageReference Include="Reqnroll" Version="3.2.1" />
     <PackageReference Include="Reqnroll.NUnit" Version="3.2.1" />
+    <PackageReference Include="Reqnroll.ExternalData" Version="3.2.1" />
     <PackageReference Include="Selenium.WebDriver" Version="4.38.0" />
     <PackageReference Include="SeleniumExtras.WaitHelpers" Version="1.0.2" />
   </ItemGroup>
