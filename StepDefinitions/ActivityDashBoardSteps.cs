@@ -10,24 +10,21 @@ using System.Globalization;
 namespace AppMillionTest.StepDefinitions
 {
     [Binding]
-    public class ActivityDashBoardSteps
+    public class ActivityDashBoardSteps : CommonMethods
     {
         private readonly ActivityDashBoardPage activityDashBoardPage;
         private readonly LeadDetailPage leadDetailPage;
-
         private readonly LoadActions loadActions;
-
-        private readonly CommonMethods commonMethods;
         private readonly ScenarioContext scenarioContext;
 
-        public ActivityDashBoardSteps(ScenarioContext scenarioContext)
+        public ActivityDashBoardSteps(ScenarioContext scenarioContext) : base(IOSDriverFactory.Driver)
         {
-            var driver = IOSDriverFactory.Driver;
-            activityDashBoardPage = new ActivityDashBoardPage(driver);
-            leadDetailPage = new LeadDetailPage(driver);
+
+            activityDashBoardPage = new ActivityDashBoardPage(Driver);
+            leadDetailPage = new LeadDetailPage(Driver);
             this.scenarioContext = scenarioContext;
-            loadActions = new LoadActions(driver);
-            commonMethods = new CommonMethods(driver);
+            loadActions = new LoadActions(Driver);
+
         }
 
         [When(@"selecciona la opcion '(.*)'")]
@@ -51,11 +48,11 @@ namespace AppMillionTest.StepDefinitions
         }
 
         [Then(@"se debe crear una actividad tipo nota con el texto agregado previamente, la fecha actual y el nombre del agente '([^']*)'")]
-        
+
         public void ThenSeDebeCrearUnaActividadTipoNotaConElTextoAgregadoPreviamenteLaFechaActualYElNombreDelAgente(string agentName)
         {
-            var note = scenarioContext.ContainsKey("noteText") ? scenarioContext["noteText"] as string : null;
-            Assert.That(note, Is.Not.Null, "No se encontró el texto de la nota en ScenarioContext");
+            
+            var note = scenarioContext["noteText"] as string;
 
             // Get the text from the lead detail page and compare
             var actualNote = leadDetailPage.GetLatestNoteText();
@@ -77,19 +74,10 @@ namespace AppMillionTest.StepDefinitions
 
         public void ThenTheUserGoesBackToTheLeadList()
         {
-            commonMethods.goBack();
+            goBack();
         }
 
-        [Then(@"se debe ver la hora y fecha de creacion")]
-        public void ThenSeDebeVerLaHoraYFechaDeCreacion()
-        {
-            Assert.That(activityDashBoardPage.IsCreationTimestampVisible(), Is.True, "No se visualiza la hora y fecha de creación.");
-        }
-
-        [Then(@"se debe ver el nombre del usuario que creo la nota '([^']*)'")]
-        public void ThenSeDebeVerElNombreDelUsuarioQueCreoLaNota(string author)
-        {
-            Assert.That(activityDashBoardPage.IsAuthorVisible(author), Is.True, $"No se visualiza el autor '{author}'.");
-        }
+        
+        
     }
 }

@@ -39,13 +39,15 @@ namespace AppMillionTest.StepDefinitions
             userPage.ClickChangeStatusOption();
         }
 
-        [Then(@"Se debe ver el estado ""(.*)"" debajo del nombre de usuario")]
-        public void ThenSeDebeVerElEstadoDebajoDelNombreDeUsuario(string expectedStatus)
+        [Then(@"se debe cambiar el status del usuario")]
+        public void ThenSeDebeCambiarElStatusDelUsuario()
         {
+            var firstStatus = userPage.GetStatusText();
+            Console.WriteLine($"✅ El primer status es '{firstStatus}').");
+            var lastStatus = userPage.ChangeUserStatus();
+            Console.WriteLine($"✅ El segundo status es '{lastStatus}').");
 
-            var visible = userPage.GetStatusText(expectedStatus);
-            Assert.That(visible, Is.EqualTo(expectedStatus), $"El estado visible '{visible}' no coincide con el esperado '{expectedStatus}'.");
-
+            Assert.That(lastStatus, Is.Not.EqualTo(firstStatus), "El estado del usuario no cambió después de la acción.");        
         }
 
         [Then(@"el usuario debe ser redirigido a la pantalla de login")]

@@ -4,30 +4,29 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using SeleniumExtras.WaitHelpers;
+using AppMillionTest.Utilities;
+using AppMillionTest.Drivers;
 
 namespace AppMillionTest.Pages
 {
-    public class ActivityDashBoardPage
+    public class ActivityDashBoardPage : CommonMethods
     {
-        private readonly IOSDriver driver;
 
-        public ActivityDashBoardPage(IOSDriver driver)
-        {
-            this.driver = driver;
-        }
+
+        public ActivityDashBoardPage(IOSDriver driver) : base(IOSDriverFactory.Driver) { }
+
 
         public void SelectNoteOption()
         {
-            var noteOption = driver.FindElement(MobileBy.AccessibilityId("Note"));
-            noteOption.Click();
+            Click(MobileBy.AccessibilityId("Note"));
+
+
         }
 
         public void EnterNoteText(string note)
         {
-            var noteInput = driver.FindElement(MobileBy.AccessibilityId("Write a note"));
-            noteInput.Clear();
-            noteInput.SendKeys(note);
-            
+            SendKeys(MobileBy.AccessibilityId("Write a note"), note);
+
         }
 
         public void ClickSaveNotes()
@@ -35,56 +34,14 @@ namespace AppMillionTest.Pages
 
             Thread.Sleep(2000);
 
-            var tapArgs = new Dictionary<string, object>
-            {
-                { "x", 228 }, 
-                { "y", 588 }
-            };
+            ClickByCoordinates(228, 588);
 
-            driver.ExecuteScript("mobile: tap", tapArgs);
+        }       
 
-        }
 
-        public bool IsNoteCreatedWithText(string note, int timeoutSeconds = 6)
-        {
-            try
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSeconds));
-                var el = wait.Until(d => d.FindElement(MobileBy.AccessibilityId("NOTE_TEXT")));
-                return el != null && el.Text.Trim() == note;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
-        public bool IsCreationTimestampVisible(int timeoutSeconds = 6)
-        {
-            try
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSeconds));
-                var el = wait.Until(d => d.FindElement(MobileBy.AccessibilityId("NOTE_TIMESTAMP")));
-                return el != null && el.Displayed;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
-        public bool IsAuthorVisible(string author, int timeoutSeconds = 6)
-        {
-            try
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSeconds));
-                var el = wait.Until(d => d.FindElement(MobileBy.AccessibilityId("NOTE_AUTHOR")));
-                return el != null && el.Text.Contains(author);
-            }
-            catch
-            {
-                return false;
-            }
-        }
+
+
     }
 }

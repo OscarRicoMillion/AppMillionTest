@@ -1,30 +1,19 @@
+using AppMillionTest.Drivers;
+using AppMillionTest.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 
 namespace AppMillionTest.Pages
 {
-    public class LoginOtpPage
+    public class LoginOtpPage : CommonMethods
     {
-        private readonly IOSDriver driver;
-        public LoginOtpPage(IOSDriver driver)
-        {
-            this.driver = driver;
-        }
 
-        private By AboutOption => MobileBy.AccessibilityId("About");
-
-
-        public void OpenInformationSection()
-        {
-            driver.FindElement(AboutOption).Click();
-        }
+        public LoginOtpPage(IOSDriver driver) : base(IOSDriverFactory.Driver) { }
 
         public void IngresarOtp(string codigo)
         {
-            var otpBoxes = driver.FindElement(MobileBy.IosClassChain("**/XCUIElementTypeOther[`visible == 1`]"));
-
-
+            var otpBoxes = Driver.FindElement(MobileBy.IosClassChain("**/XCUIElementTypeOther[`visible == 1`]"));
 
             otpBoxes.SendKeys(codigo.Substring(0, 1));
 

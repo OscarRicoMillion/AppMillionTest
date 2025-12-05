@@ -1,7 +1,7 @@
+@DataSource:../../DataSource/UserInformation.csv
 Feature: Activity Notes Features
 
   @notes
-  @DataSource:../../DataSource/UserInformation.csv
   Scenario: Crear una nota regular
     Given el usuario abre la app Million
     When ingresa el nombre de usuario "<user>"

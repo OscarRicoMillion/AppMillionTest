@@ -1,3 +1,5 @@
+using AppMillionTest.Drivers;
+using AppMillionTest.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
@@ -5,32 +7,25 @@ using OpenQA.Selenium.Support.UI;
 
 namespace AppMillionTest.Pages
 {
-    public class LeadListPage
+    public class LeadListPage : CommonMethods
     {
-        private readonly IOSDriver driver;
-        public LeadListPage(IOSDriver driver)
-        {
-            this.driver = driver;
-        }
+
+        public LeadListPage(IOSDriver driver) : base(IOSDriverFactory.Driver) { }
 
         public bool IconUserIsPresent()
         {
-            var IconUser = driver.FindElement(MobileBy.AccessibilityId("Profile"));
-            return IconUser.Displayed;
+            return IsElementVisible(MobileBy.AccessibilityId("Profile"));
         }
 
         public void ClickUserIcon()
         {
-            var UserIcon = driver.FindElement(MobileBy.AccessibilityId("Profile"));
-            UserIcon.Click();
+            Click(MobileBy.AccessibilityId("Profile"));
         }
 
         public void ClickFirstLead()
         {
-            Thread.Sleep(20000);
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            var element = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(MobileBy.AccessibilityId("get_LeadDetail")));
-            element.Click();
+            Thread.Sleep(2000); 
+            Click(MobileBy.AccessibilityId("get_LeadDetail"));
 
         }
     }

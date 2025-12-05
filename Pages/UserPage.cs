@@ -7,56 +7,53 @@ using AppMillionTest.Drivers;
 using System;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using AppMillionTest.Utilities;
 
 namespace AppMillionTest.Pages
 {
-    public class UserPage
+    public class UserPage : CommonMethods
     {
-        private readonly IOSDriver driver;
 
-        public UserPage(IOSDriver driver)
-        {
-            this.driver = driver;
-        }
+
+        public UserPage(IOSDriver driver) : base(IOSDriverFactory.Driver) { }
+
         public void ClickSignOutOption()
         {
-            var SignOutOption = driver.FindElement(MobileBy.AccessibilityId("TEST_ID_PROFILE_LOG_OUT_BTN_LETTER"));
-            SignOutOption.Click();
+            Click(MobileBy.AccessibilityId("TEST_ID_PROFILE_LOG_OUT_BTN_LETTER"));
 
 
         }
 
         public void ClickYesOption()
         {
-            int x = 315;
-            int y = 533;
-
-            // Inicializa Actions (asegúrate de que el driver es AppiumDriver<AppiumWebElement>)
-            var actions = new OpenQA.Selenium.Interactions.Actions(driver);
-
-            // Realiza el Tap
-            actions.MoveToLocation(x, y).Click().Perform();
-
-            Console.WriteLine($"✅ Clic simulado en coordenadas X:{x}, Y:{y}.");
+            ClickByCoordinates(315, 533);
         }
 
         public void ClickChangeStatusOption()
-        {           
-            var changeStatus = driver.FindElement(MobileBy.AccessibilityId(""));
-            changeStatus.Click();    
-        }
-
-        public string  GetStatusText(string expectedStatus)
         {
-            var changeStatus = driver.FindElement(MobileBy.XPath("//XCUIElementTypeScrollView//XCUIElementTypeOther[3]//XCUIElementTypeStaticText"));
-            string  StatusText = changeStatus.Text;
-             Console.WriteLine($"✅ El ustatus es '{StatusText}').");
-            return StatusText;
+
+            Click(MobileBy.AccessibilityId(""));
         }
 
-        
+        public string GetStatusText()
+        {
+            var statusText = GetElementText(MobileBy.XPath("//XCUIElementTypeScrollView//XCUIElementTypeOther[3]//XCUIElementTypeStaticText"));
+            return statusText;
+        }
 
-        
+        public string ChangeUserStatus()
+        {
+            var currentStatus = GetStatusText();
+
+            ClickChangeStatusOption();
+            var newStatus = GetStatusText();
+
+            return newStatus;
+        }
+
+
+
+
     }
 }
 
