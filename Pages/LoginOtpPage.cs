@@ -1,5 +1,6 @@
 using AppMillionTest.Drivers;
 using AppMillionTest.Utilities;
+using AppMillionTest.Locators;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
@@ -13,7 +14,7 @@ namespace AppMillionTest.Pages
 
         public void IngresarOtp(string codigo)
         {
-            var otpBoxes = Driver.FindElement(MobileBy.IosClassChain("**/XCUIElementTypeOther[`visible == 1`]"));
+            var otpBoxes = Driver.FindElement(LoginOtpLocators.OtpContainer);
 
             otpBoxes.SendKeys(codigo.Substring(0, 1));
 

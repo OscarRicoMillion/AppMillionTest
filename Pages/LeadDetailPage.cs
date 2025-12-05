@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using AppMillionTest.Utilities;
 using AppMillionTest.Drivers;
+using AppMillionTest.Locators;
 
 namespace AppMillionTest.Pages
 {
@@ -18,14 +19,14 @@ namespace AppMillionTest.Pages
         {
             Thread.Sleep(14000); // Espera breve antes de interactuar
 
-            Click(MobileBy.AccessibilityId("TEST_ID_DETAIL_LEAD_ADD_ACTIVITY"));
+            Click(LeadDetailLocators.AddActivityIcon);
 
             
         }
 
         public string GetLatestNoteText()
         {
-            return GetElementText(MobileBy.IosNSPredicate("name CONTAINS 'NOTE'"));
+            return GetElementText(LeadDetailLocators.LatestNotePredicate);
         }
     }
 }

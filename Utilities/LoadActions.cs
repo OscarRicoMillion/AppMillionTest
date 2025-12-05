@@ -24,7 +24,7 @@ namespace AppMillionTest.Utilities
             // Inicializa el WebDriverWait
             var wait = new WebDriverWait(driver, timeout);
 
-            // Selector que vamos a usar
+            
             By iconLocator = MobileBy.AccessibilityId(iconAccessibilityId);
 
             try

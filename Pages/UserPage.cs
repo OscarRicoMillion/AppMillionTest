@@ -8,6 +8,7 @@ using System;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using AppMillionTest.Utilities;
+using AppMillionTest.Locators;
 
 namespace AppMillionTest.Pages
 {
@@ -19,7 +20,7 @@ namespace AppMillionTest.Pages
 
         public void ClickSignOutOption()
         {
-            Click(MobileBy.AccessibilityId("TEST_ID_PROFILE_LOG_OUT_BTN_LETTER"));
+            Click(UserLocators.SignOutOption);
 
 
         }
@@ -32,12 +33,12 @@ namespace AppMillionTest.Pages
         public void ClickChangeStatusOption()
         {
 
-            Click(MobileBy.AccessibilityId(""));
+            Click(UserLocators.ChangeStatusIcon);
         }
 
         public string GetStatusText()
         {
-            var statusText = GetElementText(MobileBy.XPath("//XCUIElementTypeScrollView//XCUIElementTypeOther[3]//XCUIElementTypeStaticText"));
+            var statusText = GetElementText(UserLocators.StatusText);
             return statusText;
         }
 

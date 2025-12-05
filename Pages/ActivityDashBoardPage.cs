@@ -6,6 +6,7 @@ using System;
 using SeleniumExtras.WaitHelpers;
 using AppMillionTest.Utilities;
 using AppMillionTest.Drivers;
+using AppMillionTest.Locators;
 
 namespace AppMillionTest.Pages
 {
@@ -18,14 +19,14 @@ namespace AppMillionTest.Pages
 
         public void SelectNoteOption()
         {
-            Click(MobileBy.AccessibilityId("Note"));
+            Click(ActivityDashBoardLocators.NoteOption);
 
 
         }
 
         public void EnterNoteText(string note)
         {
-            SendKeys(MobileBy.AccessibilityId("Write a note"), note);
+            SendKeys(ActivityDashBoardLocators.NoteInput, note);
 
         }
 

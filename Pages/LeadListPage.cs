@@ -1,4 +1,5 @@
 using AppMillionTest.Drivers;
+using AppMillionTest.Locators;
 using AppMillionTest.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -14,18 +15,18 @@ namespace AppMillionTest.Pages
 
         public bool IconUserIsPresent()
         {
-            return IsElementVisible(MobileBy.AccessibilityId("Profile"));
+            return IsElementVisible(LeadListLocators.UserIcon);
         }
 
         public void ClickUserIcon()
         {
-            Click(MobileBy.AccessibilityId("Profile"));
+            Click(LeadListLocators.UserIcon);
         }
 
         public void ClickFirstLead()
         {
             Thread.Sleep(2000); 
-            Click(MobileBy.AccessibilityId("get_LeadDetail"));
+            Click(LeadListLocators.FirstLead);
 
         }
     }

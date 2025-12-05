@@ -1,4 +1,5 @@
 using AppMillionTest.Drivers;
+using AppMillionTest.Locators;
 using AppMillionTest.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -17,7 +18,7 @@ namespace AppMillionTest.Pages
         public void IngresarNombreDeUsuario(string username)
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            var usernameField = wait.Until(d => d.FindElement(MobileBy.AccessibilityId("TEST_ID_LOGIN_EMAIL_INPUT")));
+            var usernameField = wait.Until(d => d.FindElement(LoginUserLocators.UsernameInput));
             usernameField.Clear();
             usernameField.SendKeys(username.Substring(0, 1));
 
@@ -31,23 +32,12 @@ namespace AppMillionTest.Pages
 
         public void ClickContinueButton()
         {
-            Click(MobileBy.AccessibilityId("Continue"));
+            Click(LoginUserLocators.ContinueButton);
         }
 
         public bool IsLoginScreenVisible()
-        {
-            /* try
-            {
-                var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutSeconds));
-                var el = wait.Until(d => d.FindElement(MobileBy.AccessibilityId("TEST_ID_LOGIN_EMAIL_INPUT")));
-                return el != null && el.Displayed;
-            }
-            catch
-            {
-                return false;
-            } */
-
-            return IsElementVisible(MobileBy.AccessibilityId("TEST_ID_LOGIN_EMAIL_INPUT"));
+        {            
+            return IsElementVisible(LoginUserLocators.UsernameInput);
              
         }
     }
