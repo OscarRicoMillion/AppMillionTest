@@ -4,7 +4,7 @@ using OpenQA.Selenium.Appium;
 namespace AppMillionTest.Locators
 {
     /// <summary>
-    /// Selectors for OTP input.
+    /// Selectors for OTP view.
     /// </summary>
     public static class LoginOtpLocators
     {   

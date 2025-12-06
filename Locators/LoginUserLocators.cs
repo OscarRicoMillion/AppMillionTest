@@ -4,7 +4,7 @@ using OpenQA.Selenium.Appium;
 namespace AppMillionTest.Locators
 {
     /// <summary>
-    /// Centralized selectors for the Login user flow.
+    /// selectors for the Login user view.
     /// </summary>
     public static class LoginUserLocators
     {

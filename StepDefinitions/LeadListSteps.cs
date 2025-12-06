@@ -2,7 +2,7 @@ using NUnit.Framework;
 using AppMillionTest.Drivers;
 using AppMillionTest.Pages;
 using Reqnroll;
-using OpenQA.Selenium.Appium; // si usas las utilidades de Reqnroll
+using OpenQA.Selenium.Appium; // if you rely on Reqnroll utilities
 
 namespace AppMillionTest.StepDefinitions
 {
@@ -18,22 +18,22 @@ namespace AppMillionTest.StepDefinitions
             userPage = new UserPage(driver);
         }
 
-        [Then(@"se debe cargar el listado de leads con el icono de usuario visible")]
-        public void ThenSeDebeCargarElListadoDeLeadsConElIconoDeUsuarioVisible()
+        [Then("the lead list should load with the user icon visible")]
+        public void ThenTheLeadListShouldLoadWithTheUserIconVisible()
         {
             var UserIconVisible = leadListPage.IconUserIsPresent();  
 
-            Assert.That(UserIconVisible, Is.True, "El icono de usuario no está visible en el listado de leads.");
+            Assert.That(UserIconVisible, Is.True, "User icon is not visible on the lead list.");
         }
 
-         [When(@"selecciona el icono de usuario")]
-        public void WhenSeleccionaElIconoDeUsuario()
+         [When("taps the user icon")]
+        public void WhenTapsTheUserIcon()
         {
             leadListPage.ClickUserIcon();
         }
 
-        [When(@"Selecciona un lead de la lista")]
-        public void WhenSeleccionaUnLeadDeLaLista()
+        [When("picks a lead from the list")]
+        public void WhenPicksALeadFromTheList()
         {
             leadListPage.ClickFirstLead();
         }

@@ -2,7 +2,7 @@ using NUnit.Framework;
 using AppMillionTest.Drivers;
 using AppMillionTest.Pages;
 using Reqnroll;
-using OpenQA.Selenium.Appium; // si usas las utilidades de Reqnroll
+using OpenQA.Selenium.Appium; // if you rely on Reqnroll utilities
 
 namespace AppMillionTest.StepDefinitions
 {
@@ -19,14 +19,10 @@ namespace AppMillionTest.StepDefinitions
 
         }
 
-        [When(@"ingresa el OTP ""(.*)""")]
-        public void WhenIngresaElOTP(string codigo)
+        [When("enters the OTP \"(.*)\"")]
+        public void WhenEntersTheOtp(string code)
         {               
-            loginOtpPage.IngresarOtp(codigo);
+            loginOtpPage.EnterOtp(code);
         }
-
-       
-
-
     }
 }

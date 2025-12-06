@@ -46,12 +46,12 @@ namespace AppMillionTest.Utilities
                 // Save the screenshot
                 screenshot.SaveAsFile(fullPath);
 
-                Console.WriteLine($"📸 Screenshot guardado: {fullPath}");
+                Console.WriteLine($"📸 Screenshot saved: {fullPath}");
                 return fullPath;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error al capturar screenshot: {ex.Message}");
+                Console.WriteLine($"❌ Failed to capture screenshot: {ex.Message}");
                 return string.Empty;
             }
         }

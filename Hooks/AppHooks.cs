@@ -5,16 +5,24 @@ using System;
 
 namespace AppMillionTest.Hooks
 {
+    /// <summary>
+    /// Hooks for managing app lifecycle and capturing screenshots on test failures.
+    /// </summary>
     [Binding]
     public class AppHooks
     {
-
+        /// <summary>
+        /// Launches the app before each scenario.
+        /// </summary>
         [BeforeScenario]
         public void LaunchSettings()
         {
             IOSDriverFactory.LaunchApp();
         }
 
+        /// <summary>
+        /// Closes the app after each scenario.
+        /// </summary>
         [AfterScenario]
         public void CloseSettings()
         {
@@ -22,35 +30,41 @@ namespace AppMillionTest.Hooks
          
         }
 
+        /// <summary>
+        /// Captures a screenshot when a step fails.
+        /// </summary>
+        /// <param name="scenarioContext">The current scenario context.</param>
         [AfterStep]
         public void CaptureScreenshotOnFailure(ScenarioContext scenarioContext)
         {
-            // Verificar si el step falló
+            // Capture evidence when the step fails
             if (scenarioContext.TestError != null)
             {
                 try
                 {
-                    // Obtener driver desde IOSDriverFactory
+                    // Grab the driver from the factory
                     var driver = IOSDriverFactory.Driver;
 
-                    // Capturar y guardar screenshot
+                    // Capture and save the screenshot
                     var screenshotPath = ScreenshotHelper.CaptureScreenshot(
                         driver,
                         scenarioContext.ScenarioInfo.Title,
                         scenarioContext.StepContext.StepInfo.Text
                     );
 
-                    // Guardar ruta en ScenarioContext para uso futuro (Allure, Azure, etc.)
+                    // Store path in ScenarioContext for future reporting hooks
                     if (!string.IsNullOrEmpty(screenshotPath))
                     {
                         scenarioContext["FailureScreenshot"] = screenshotPath;
-                        Console.WriteLine($"✅ Screenshot capturado y guardado para step fallido.");
+                        Console.WriteLine("✅ Screenshot captured for failing step.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"⚠️ Error al intentar capturar screenshot: {ex.Message}");
+                    Console.WriteLine($"⚠️ Error while capturing screenshot: {ex.Message}");
                 }
+
+               
             }
         }
         

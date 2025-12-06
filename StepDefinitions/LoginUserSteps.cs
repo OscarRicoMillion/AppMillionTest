@@ -17,20 +17,20 @@ namespace AppMillionTest.StepDefinitions
 
         }
 
-        [Given(@"el usuario abre la app Million")]
-        public void GivenElUsuarioAbreLaAppMillion()
+        [Given("the user opens the Million app")]
+        public void GivenTheUserOpensTheMillionApp()
         {
             IOSDriverFactory.LaunchApp();
         }
 
-        [When(@"ingresa el nombre de usuario ""(.*)""")]
-        public void WhenIngresaElNombreDeUsuario(string username)
+        [When("enters the username \"(.*)\"")]
+        public void WhenEntersTheUsername(string username)
         {
-           loginUserPage.IngresarNombreDeUsuario(username);
+              loginUserPage.EnterUsername(username);
         }
 
-        [When(@"selecciona el boton continue")]
-        public void WhenSeleccionaElBotonContinue()
+        [When("taps the Continue button")]
+        public void WhenTapsTheContinueButton()
         {
             loginUserPage.ClickContinueButton();
         }

@@ -2,21 +2,21 @@
 Feature: Activity Notes Features
 
   @notes
-  Scenario: Crear una nota regular
-    Given el usuario abre la app Million
-    When ingresa el nombre de usuario "<user>"
-    And selecciona el boton continue
-    When ingresa el OTP "<OtpCode>"
-    Then se debe cargar el listado de leads con el icono de usuario visible
-    When Selecciona un lead de la lista
-    And selecciona el icono add para agregar una actividad
-    When selecciona la opcion 'NOTE'
-    And ingresa el texto de la nota 'Nota Test automation'
-    And selecciona el boton Save Notes
-    Then se debe crear una actividad tipo nota con el texto agregado previamente, la fecha actual y el nombre del agente 'by Agente Calidad stage'
-    And the user goes back to the lead list
-    When selecciona el icono de usuario
-    And selecciona la opcion Sing out
-    Then el usuario debe ser redirigido a la pantalla de login
+  Scenario: Create a regular note
+    Given the user opens the Million app
+    When enters the username "<user>"
+    And taps the Continue button
+    When enters the OTP "<OtpCode>"
+    Then the lead list should load with the user icon visible
+    When picks a lead from the list
+    And taps the add icon to create an activity
+    When chooses the 'NOTE' option
+    And types the note text 'Test automation note'
+    And hits the Save Notes button
+    Then the activity should show the note text, today's date, and the agent name 'by Agente Calidad stage'
+    And goes back to the lead list
+    When taps the user icon
+    And selects the Sing out option
+    Then the user should be redirected to the login screen
 
 

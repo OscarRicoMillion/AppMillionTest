@@ -6,22 +6,34 @@ using SeleniumExtras.WaitHelpers;
 
 namespace AppMillionTest.Utilities
 {
+    /// <summary>
+    /// Helper class for validating loading indicators during test execution.
+    /// </summary>
     public class LoadActions
     {
         private readonly IOSDriver driver;
 
+        /// <summary>
+        /// Initializes a new instance of the LoadActions class.
+        /// </summary>
+        /// <param name="driver">The iOS driver instance.</param>
         public LoadActions(IOSDriver driver)
         {
             this.driver = driver;
         }
 
-        public bool validateLoadingicon()
+        /// <summary>
+        /// Validates that the loading icon appears and then disappears within the timeout period.
+        /// </summary>
+        /// <returns>True if the icon appeared and then disappeared, false otherwise.</returns>
+        /// <exception cref="WebDriverTimeoutException">Thrown when the icon does not appear or disappear on time.</exception>
+        public bool ValidateLoadingIcon()
         {
 
             string iconAccessibilityId = "LoadingPress";
-            TimeSpan timeout = TimeSpan.FromSeconds(10); // Tiempo máximo para la validación completa
+            TimeSpan timeout = TimeSpan.FromSeconds(10); // Maximum time allowed for validation
 
-            // Inicializa el WebDriverWait
+            // Initialize the WebDriverWait
             var wait = new WebDriverWait(driver, timeout);
 
             
@@ -31,13 +43,13 @@ namespace AppMillionTest.Utilities
             {
                 var iconElementDisplay = wait.Until(ExpectedConditions.ElementIsVisible(iconLocator));
 
-                Console.WriteLine("✅ Ícono 'LoadingPress' encontrado (el proceso de log out ha iniciado).");
+                Console.WriteLine("✅ 'LoadingPress' icon found (log out started).");
 
 
                 var iconelementNotDisplayed = wait.Until(ExpectedConditions.InvisibilityOfElementLocated(iconLocator));
-                Console.WriteLine("✅ El ícono 'LoadingPress' ha desaparecido (el proceso de log out ha finalizado).");
+                Console.WriteLine("✅ 'LoadingPress' icon disappeared (log out finished).");
 
-                // Validamos que ambos pasos ocurrieron: se mostró y posteriormente desapareció
+                // Confirm that the icon first appeared and then disappeared
                 var wasVisible = iconElementDisplay != null;
                 return wasVisible && iconelementNotDisplayed;
 
@@ -45,8 +57,8 @@ namespace AppMillionTest.Utilities
             catch (WebDriverTimeoutException)
             {
               
-                Console.WriteLine($"❌ Falla de validación: El ícono '{iconAccessibilityId}' no apareció o no desapareció a tiempo.");
-                throw; // Relanza la excepción para que la prueba falle
+                Console.WriteLine($"❌ Validation failed: Icon '{iconAccessibilityId}' did not appear or disappear on time.");
+                throw; // Re-throw so the test fails visibly
             }
         }
 

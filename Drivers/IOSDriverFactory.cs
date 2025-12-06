@@ -4,60 +4,62 @@ using OpenQA.Selenium.Appium.iOS;
 namespace AppMillionTest.Drivers
 {
     /// <summary>
-    /// Fábrica para la sesión iOS Appium. Controla creación, cierre y relanzamiento de apps.
+    /// Factory for the iOS Appium session. Manages creation, teardown, and relaunching the app.
     /// </summary>
     public static class IOSDriverFactory
     {
-        // Instancia del driver iOS
+        // Shared iOS driver instance
         private static IOSDriver? _driver;
 
         /// <summary>
-        /// Obtiene la instancia actual del driver iOS.
+        /// Gets the current iOS driver instance.
         /// </summary>
-        public static IOSDriver Driver => _driver ?? throw new InvalidOperationException("Driver no inicializado.");
+        public static IOSDriver Driver => _driver ?? throw new InvalidOperationException("Driver not initialized.");
 
-        // Ruta de tu .app
+        /// <summary>
+        /// Path to the .app bundle.
+        /// </summary>
         public const string AppPath = "/Users/daniel/Documents/AppMillionTest/AppMillionTest/App/MillionAndUp.app";
 
-        // El bundleId real de tu app (lo vas a usar SOLO para cerrar/reabrir)
+        /// <summary>
+        /// Real bundle identifier used to close/reopen the app.
+        /// </summary>
         public const string MillionAndUpBundleId = "com.MillionAndUp.mau";
 
         /// <summary>
-        /// Inicia una sesión Appium si no existe.
+        /// Starts an Appium session if one is not already running.
         /// </summary>
         public static void StartSession()
         {
-            // Si ya hay un driver, no hagas nada
+            // Reuse the existing driver when possible
             if (_driver != null)
                 return;
 
-            // Configura las opciones de Appium
+            // Configure Appium options
             var options = new AppiumOptions
             {
                 PlatformName = "iOS",
                 AutomationName = "XCUITest",
-                //DeviceName = "iPhone 16", // debe coincidir con el simulador existente
-                DeviceName = "iPhone 17 Pro Max", // debe coincidir con el simulador existente
+                DeviceName = "iPhone 17 Pro Max",
                 PlatformVersion = "26.1"
             };
 
-            // linea para usar la app .app directamente
-            options.App = AppPath;
+            // Install the app at the beginning of the run if needed
+            //options.App = AppPath;
 
-            // linea para usar el bundleId (opcional)
-            //options.AddAdditionalAppiumOption("bundleId", MillionAndUpBundleId);
 
-            // � Especifica tu UDID real desde el simulador
-            // lo obtienes con: `xcrun simctl list devices`
-            //options.AddAdditionalAppiumOption("udid", "B629C756-DDC8-4524-8C51-8F99F32A73C4"); //16
-            options.AddAdditionalAppiumOption("udid", "9D760A97-D324-4C1B-BFB9-D0FCB18BF35D"); //17 max
+            // Use the already installed app for the tests
+            options.AddAdditionalAppiumOption("bundleId", MillionAndUpBundleId);
 
-            // � Mantén la sesión viva entre escenarios
+           
+            options.AddAdditionalAppiumOption("udid", "9D760A97-D324-4C1B-BFB9-D0FCB18BF35D"); // iPhone 17 Pro Max
+
+            // Keep the same session alive between scenarios
             options.AddAdditionalAppiumOption("noReset", false);
-            options.AddAdditionalAppiumOption("useNewWDA", false); // ⚡️ evita recompilar WDA            
+            options.AddAdditionalAppiumOption("useNewWDA", false); // avoids rebuilding WDA            
             options.AddAdditionalAppiumOption("autoDismissAlerts", true);
 
-            // Otras opciones útiles
+            // Other helpful options
             options.AddAdditionalAppiumOption("newCommandTimeout", 300);
             options.AddAdditionalAppiumOption("wdaLaunchTimeout", 60000);
             options.AddAdditionalAppiumOption("wdaConnectionTimeout", 60000);
@@ -67,13 +69,13 @@ namespace AppMillionTest.Drivers
             options.AddAdditionalAppiumOption("reduceMotion", true);
             options.AddAdditionalAppiumOption("reduceTransparency", true);
 
-            // Crea el driver
+            // Create the driver
             _driver = new IOSDriver(new Uri("http://127.0.0.1:4723"), options);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
         /// <summary>
-        /// Cierra completamente la sesión Appium.
+        /// Completely stops the Appium session.
         /// </summary>
         public static void StopSession()
         {
@@ -82,7 +84,7 @@ namespace AppMillionTest.Drivers
         }
 
         /// <summary>
-        /// Lanza la app especificada.
+        /// Launches the app identified by the bundle id.
         /// </summary>
         public static void LaunchApp()
         {
@@ -93,7 +95,7 @@ namespace AppMillionTest.Drivers
         }
 
         /// <summary>
-        /// Termina la app especificada sin cerrar la sesión completa.
+        /// Terminates the app without closing the entire session.
         /// </summary>
         public static void CloseApp()
         {
@@ -101,8 +103,6 @@ namespace AppMillionTest.Drivers
             {
                 { "bundleId", MillionAndUpBundleId }
             });
-
-
         }
     }
 }

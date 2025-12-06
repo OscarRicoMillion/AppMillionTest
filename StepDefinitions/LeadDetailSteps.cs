@@ -17,8 +17,8 @@ namespace AppMillionTest.StepDefinitions
             leadDetailPage = new LeadDetailPage(driver);
         }
 
-        [When(@"selecciona el icono add para agregar una actividad")]
-        public void WhenSeleccionaElIconoDeAgregarActividad()
+        [When("taps the add icon to create an activity")]
+        public void WhenTapsTheAddIconToCreateAnActivity()
         {
             leadDetailPage.ClickAddActivityIcon();
         }

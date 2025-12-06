@@ -27,54 +27,52 @@ namespace AppMillionTest.StepDefinitions
 
         }
 
-        [When(@"selecciona la opcion '(.*)'")]
-        public void WhenSeleccionaLaOpcion(string option)
+        [When("chooses the '(.*)' option")]
+        public void WhenChoosesTheOption(string option)
         {
             activityDashBoardPage.SelectNoteOption();
         }
 
-        [When(@"ingresa el texto de la nota '([^']*)'")]
-        public void WhenIngresaElTextoDeLaNota(string note)
+        [When("types the note text '([^']*)'")]
+        public void WhenTypesTheNoteText(string note)
         {
             activityDashBoardPage.EnterNoteText(note);
             scenarioContext["noteText"] = note;
         }
 
-        [When(@"selecciona el boton Save Notes")]
-        public void WhenSeleccionaElBotonSaveNotes()
+        [When("hits the Save Notes button")]
+        public void WhenHitsTheSaveNotesButton()
         {
             activityDashBoardPage.ClickSaveNotes();
-            Assert.That(loadActions.validateLoadingicon(), Is.True, "La pantalla de carga no se completó a tiempo.");
+            Assert.That(loadActions.ValidateLoadingIcon(), Is.True, "Loading screen did not finish on time.");
         }
 
-        [Then(@"se debe crear una actividad tipo nota con el texto agregado previamente, la fecha actual y el nombre del agente '([^']*)'")]
-
-        public void ThenSeDebeCrearUnaActividadTipoNotaConElTextoAgregadoPreviamenteLaFechaActualYElNombreDelAgente(string agentName)
+        [Then("the activity should show the note text, today's date, and the agent name '([^']*)'")]
+        public void ThenTheActivityShouldShowTheNoteDetails(string agentName)
         {
             
             var note = scenarioContext["noteText"] as string;
 
             // Get the text from the lead detail page and compare
             var actualNote = leadDetailPage.GetLatestNoteText();
-            Assert.That(actualNote, Does.Contain(note), "La nota creada no coincide con el texto ingresado.");
-            Assert.That(actualNote, Does.Contain(agentName), "Se esperaba que la nota contuviera el nombre del agente.");
+            Assert.That(actualNote, Does.Contain(note), "Created note does not match the typed text.");
+            Assert.That(actualNote, Does.Contain(agentName), "Created note should include the agent name.");
 
 
             var CurrentDate = DateTime.Now.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture);
-            Assert.That(actualNote, Does.Contain(CurrentDate), "La nota creada no contiene la fecha actual.");
+            Assert.That(actualNote, Does.Contain(CurrentDate), "Created note is missing today's date.");
 
-            Console.WriteLine($"✅ Fecha actual: {CurrentDate}");
-            Console.WriteLine($"✅ Nota esperada: {note}");
-            Console.WriteLine($"✅ Nota actual: {actualNote}");
-            Console.WriteLine($"✅ Agente esperado: {agentName}");
+            Console.WriteLine($"✅ Current date: {CurrentDate}");
+            Console.WriteLine($"✅ Expected note: {note}");
+            Console.WriteLine($"✅ Actual note: {actualNote}");
+            Console.WriteLine($"✅ Expected agent: {agentName}");
 
         }
 
-        [Then(@"the user goes back to the lead list")]
-
-        public void ThenTheUserGoesBackToTheLeadList()
+        [Then("goes back to the lead list")]
+        public void ThenGoesBackToTheLeadList()
         {
-            goBack();
+            GoBack();
         }
 
         

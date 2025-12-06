@@ -2,28 +2,28 @@
 Feature: Login Features
 
 
-  Scenario: Realizar login y sign out exitoso
-    Given el usuario abre la app Million
-    When ingresa el nombre de usuario "<user>"
-    And selecciona el boton continue
-    When ingresa el OTP "<OtpCode>"
-    Then se debe cargar el listado de leads con el icono de usuario visible
-    When selecciona el icono de usuario
-    And selecciona la opcion Sing out
-    Then el usuario debe ser redirigido a la pantalla de login
+  Scenario: Successful login and Sing out
+    Given the user opens the Million app
+    When enters the username "<user>"
+    And taps the Continue button
+    When enters the OTP "<OtpCode>"
+    Then the lead list should load with the user icon visible
+    When taps the user icon
+    And selects the Sing out option
+    Then the user should be redirected to the login screen
 
 
-  Scenario: Cambiar usuario a available
-    Given el usuario abre la app Million
-    When ingresa el nombre de usuario "<user>"
-    And selecciona el boton continue
-    When ingresa el OTP "<OtpCode>"
-    Then se debe cargar el listado de leads con el icono de usuario visible
-    When selecciona el icono de usuario
-    And selecciona la opcion de cambiar status de usuario
-    Then se debe cambiar el status del usuario
-    When selecciona la opcion Sing out
-    Then el usuario debe ser redirigido a la pantalla de login
+  Scenario: Switch user status to available
+    Given the user opens the Million app
+    When enters the username "<user>"
+    And taps the Continue button
+    When enters the OTP "<OtpCode>"
+    Then the lead list should load with the user icon visible
+    When taps the user icon
+    And picks the option to change the user status
+    Then the user status should switch
+    When selects the Sing out option
+    Then the user should be redirected to the login screen
 
 
 
