@@ -21,7 +21,7 @@ namespace AppMillionTest.StepDefinitions
 
         [When(@"ingresa el OTP ""(.*)""")]
         public void WhenIngresaElOTP(string codigo)
-        {
+        {               
             loginOtpPage.IngresarOtp(codigo);
         }
 

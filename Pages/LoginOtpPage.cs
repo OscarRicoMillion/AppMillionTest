@@ -4,6 +4,7 @@ using AppMillionTest.Locators;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
+using OpenQA.Selenium.Support.UI;
 
 namespace AppMillionTest.Pages
 {
@@ -14,15 +15,25 @@ namespace AppMillionTest.Pages
 
         public void IngresarOtp(string codigo)
         {
-            var otpBoxes = Driver.FindElement(LoginOtpLocators.OtpContainer);
+            // Verificar que el contenedor de OTP esté visible
+            if (!IsElementVisible(LoginOtpLocators.Otpcontainer))
+            {
 
-            otpBoxes.SendKeys(codigo.Substring(0, 1));
+                throw new NoSuchElementException("El contenedor de OTP no está visible.");
+
+            }
+
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            var Otp = wait.Until(d => d.FindElement(LoginOtpLocators.OtpInput));
+            Otp.Clear();
+            Otp.SendKeys(codigo.Substring(0, 1));
 
             // Enviar el resto de la cadena de golpe
             if (codigo.Length > 1)
             {
-                otpBoxes.SendKeys(codigo.Substring(1));
+                Otp.SendKeys(codigo.Substring(1));
             }
+
         }
     }
 }

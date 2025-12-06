@@ -2,7 +2,7 @@
 Feature: Login Features
 
 
-  Scenario: Realizar login y sign out exitoso en la app con usuario agente
+  Scenario: Realizar login y sign out exitoso
     Given el usuario abre la app Million
     When ingresa el nombre de usuario "<user>"
     And selecciona el boton continue

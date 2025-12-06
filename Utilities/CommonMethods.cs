@@ -19,7 +19,7 @@ namespace AppMillionTest.Utilities
         public CommonMethods(IOSDriver driver)
         {
             Driver = driver;
-        }
+        }      
 
         //validar si un elemento es visible en pantalla
         public bool IsElementVisible(By locator)
@@ -32,7 +32,7 @@ namespace AppMillionTest.Utilities
             }
             catch
             {
-                return false;
+                return false;                
             }
         }   
 
@@ -41,7 +41,6 @@ namespace AppMillionTest.Utilities
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(DefaultWaitSeconds));
         }
-
 
         // Navega un paso hacia atrás dentro de la vista actual usando el botón accesible
         public void goBack()
