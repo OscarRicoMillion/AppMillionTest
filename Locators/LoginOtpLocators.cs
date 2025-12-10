@@ -8,7 +8,6 @@ namespace AppMillionTest.Locators
     /// </summary>
     public static class LoginOtpLocators
     {   
-
         public static readonly By Otpcontainer = MobileBy.AccessibilityId("TEST_ID_VERIFICATION_CODE_CONTAINER");
         public static readonly By OtpInput = MobileBy.IosClassChain("**/XCUIElementTypeOther[`visible == 1`]");
     }

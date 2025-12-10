@@ -46,8 +46,8 @@ namespace AppMillionTest.Pages
         /// </summary>
         public void ClickChangeStatusOption()
         {
-
             Click(UserLocators.ChangeStatusIcon);
+            Thread.Sleep(800);
         }
 
         /// <summary>

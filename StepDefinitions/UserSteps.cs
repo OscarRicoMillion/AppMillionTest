@@ -44,10 +44,15 @@ namespace AppMillionTest.StepDefinitions
         {
             var firstStatus = userPage.GetStatusText();
             Console.WriteLine($"✅ First status is '{firstStatus}'.");
+
             var lastStatus = userPage.ChangeUserStatus();
             Console.WriteLine($"✅ Second status is '{lastStatus}'.");
 
-            Assert.That(lastStatus, Is.Not.EqualTo(firstStatus), "User status did not change after the action.");        
+            if(firstStatus == "Avaliable")
+                Assert.That(lastStatus, Is.EqualTo("Do Not Disturb"), "User status did not change to Do Not Disturb.");
+            
+            else if (firstStatus == "Do Not Disturb")
+                Assert.That(lastStatus, Is.EqualTo("Avaliable"), "User status did not change to Avaliable.");               
         }
 
         [Then("the user should be redirected to the login screen")]

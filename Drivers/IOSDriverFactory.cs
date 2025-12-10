@@ -1,5 +1,9 @@
+using System.Security.Cryptography.X509Certificates;
+using AppMillionTest.Configuration;
+using Microsoft.VisualBasic;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
+
 
 namespace AppMillionTest.Drivers
 {
@@ -17,9 +21,9 @@ namespace AppMillionTest.Drivers
         public static IOSDriver Driver => _driver ?? throw new InvalidOperationException("Driver not initialized.");
 
         /// <summary>
-        /// Path to the .app bundle.
+        /// Path to the .app bundle from appsettings file
         /// </summary>
-        public const string AppPath = "/Users/daniel/Documents/AppMillionTest/AppMillionTest/App/MillionAndUp.app";
+        private static string AppPath => ConfigService.Instance.GetAppPath();
 
         /// <summary>
         /// Real bundle identifier used to close/reopen the app.
@@ -35,34 +39,41 @@ namespace AppMillionTest.Drivers
             if (_driver != null)
                 return;
 
+            bool isPipeline = ConfigService.Instance.GetEnviromentConfig();
+
             // Configure Appium options
             var options = new AppiumOptions
             {
                 PlatformName = "iOS",
                 AutomationName = "XCUITest",
-                DeviceName = "iPhone 17 Pro Max",
-                PlatformVersion = "26.1"
+                DeviceName = ConfigService.Instance.GetDeviceName(),
+                PlatformVersion = ConfigService.Instance.GetPlatformVersion()
             };
 
-            // Install the app at the beginning of the run if needed
-            //options.App = AppPath;
+            // Configure app installation based on environment
+            if (isPipeline)
+            {   
+                // Pipeline: Install app from bundle to ensure clean state
+                options.App = AppPath;
+            }
+            else
+            {   
+                // Local: Use already installed app for faster execution
+                options.AddAdditionalAppiumOption("bundleId", MillionAndUpBundleId);
+            }
 
-
-            // Use the already installed app for the tests
-            options.AddAdditionalAppiumOption("bundleId", MillionAndUpBundleId);
-
-           
             options.AddAdditionalAppiumOption("udid", "9D760A97-D324-4C1B-BFB9-D0FCB18BF35D"); // iPhone 17 Pro Max
 
-            // Keep the same session alive between scenarios
+            // Reset app data between scenarios to require fresh login each time
             options.AddAdditionalAppiumOption("noReset", false);
-            options.AddAdditionalAppiumOption("useNewWDA", false); // avoids rebuilding WDA            
+
+            options.AddAdditionalAppiumOption("useNewWDA", false); // Reuse WDA instance for speed            
             options.AddAdditionalAppiumOption("autoDismissAlerts", true);
 
             // Other helpful options
             options.AddAdditionalAppiumOption("newCommandTimeout", 300);
-            options.AddAdditionalAppiumOption("wdaLaunchTimeout", 60000);
-            options.AddAdditionalAppiumOption("wdaConnectionTimeout", 60000);
+            options.AddAdditionalAppiumOption("wdaLaunchTimeout", 30000);
+            options.AddAdditionalAppiumOption("wdaConnectionTimeout", 30000);
             options.AddAdditionalAppiumOption("connectHardwareKeyboard", true);
             options.AddAdditionalAppiumOption("wdaStartupRetries", 3);
             options.AddAdditionalAppiumOption("wdaStartupRetryInterval", 5000);
@@ -71,7 +82,7 @@ namespace AppMillionTest.Drivers
 
             // Create the driver
             _driver = new IOSDriver(new Uri("http://127.0.0.1:4723"), options);
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
         }
 
         /// <summary>

@@ -27,11 +27,8 @@ namespace AppMillionTest.Pages
         {
             // Make sure the OTP container is visible before typing
             if (!IsElementVisible(LoginOtpLocators.Otpcontainer))
-            {
-
                 throw new NoSuchElementException("OTP container is not visible.");
 
-            }
 
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
             var Otp = wait.Until(d => d.FindElement(LoginOtpLocators.OtpInput));
