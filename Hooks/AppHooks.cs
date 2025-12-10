@@ -31,11 +31,11 @@ namespace AppMillionTest.Hooks
         }
 
         /// <summary>
-        /// Captures a screenshot when a step fails.
+        /// Captures a screenshot when a step fails and uploads it to Azure Blob Storage.
         /// </summary>
         /// <param name="scenarioContext">The current scenario context.</param>
         [AfterStep]
-        public void CaptureScreenshotOnFailure(ScenarioContext scenarioContext)
+        public async Task CaptureScreenshotOnFailure(ScenarioContext scenarioContext)
         {
             // Capture evidence when the step fails
             if (scenarioContext.TestError != null)
@@ -45,26 +45,29 @@ namespace AppMillionTest.Hooks
                     // Grab the driver from the factory
                     var driver = IOSDriverFactory.Driver;
 
-                    // Capture and save the screenshot
+                    // Capture and save the screenshot locally
                     var screenshotPath = ScreenshotService.CaptureScreenshot(
                         driver,
                         scenarioContext.ScenarioInfo.Title,
                         scenarioContext.StepContext.StepInfo.Text
                     );
 
-                    // Store path in ScenarioContext for future reporting hooks
+                    // Store local path in ScenarioContext
                     if (!string.IsNullOrEmpty(screenshotPath))
                     {
                         scenarioContext["FailureScreenshot"] = screenshotPath;
-                        Console.WriteLine("✅ Screenshot captured for failing step.");
+                        Console.WriteLine($"✅ Screenshot captured: {screenshotPath}");
+
+                        // Upload to Azure and get public URL
+                        var azureUrl = await AzureBlobService.UploadScreenshot(screenshotPath);
+                        scenarioContext["AzureScreenshotUrl"] = azureUrl;
+                        Console.WriteLine($"☁️ Screenshot uploaded on Azure Blob Storage: {azureUrl}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"⚠️ Error while capturing screenshot: {ex.Message}");
+                    Console.WriteLine($"⚠️ Error while capturing/uploading screenshot: {ex.Message}");
                 }
-
-               
             }
         }
         

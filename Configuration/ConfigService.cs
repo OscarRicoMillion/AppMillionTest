@@ -106,5 +106,26 @@ namespace AppMillionTest.Configuration
             ?? true;
                  
         }
+
+        /// <summary>
+        /// Gets the Azure Blob Storage connection string from appsettings.json.
+        /// </summary>
+        /// <returns>The configured Azure Blob Storage connection string.</returns>
+        public string GetAzureStorageConnectionString()
+        {
+            return Root.GetValue<string>("AzureStorage:ConnectionString")
+                ?? throw new InvalidOperationException("AzureStorage:ConnectionString is not configured in appsettings.json");   
+        }
+
+        /// <summary>
+        /// Gets the Azure Blob Storage container name from appsettings.json.
+        /// </summary>
+        /// <returns>The configured container name.</returns>
+        public string GetAzureStorageContainerName()
+        {
+            return Root.GetValue<string>("AzureStorage:ContainerName")
+                ?? "mobile-test-screenshots";   
+        }
+
     }
 }
