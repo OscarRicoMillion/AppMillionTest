@@ -56,53 +56,23 @@ namespace AppMillionTest.Configuration
 
         /// <summary>
         /// Gets the path to the .app bundle.
-        /// Supports both local execution (from project root) and pipeline execution (from bin output).
         /// </summary>
         /// <returns>The configured app path.</returns>
-        /// <exception cref="FileNotFoundException">Thrown when the app file is not found.</exception>
+        /// <exception cref="FileNotFoundException">Thrown when the app bundle is not found.</exception>
         public string GetAppPath()
         {
             var appName = Root.GetValue<string>("AppPath") ?? "MillionAndUp.app";
+            
+            // Navigate from bin/Debug/net9.0 to project root
             var currentDir = Directory.GetCurrentDirectory();
-
-            // Strategy 1: Check in current directory (pipeline - App copied to bin/Debug/net9.0)
-            var pathInCurrentDir = Path.Combine(currentDir, "App", appName);
-            Console.WriteLine($"🔍 Checking path in current dir: {pathInCurrentDir}");
-            if (Directory.Exists(pathInCurrentDir))
-            {
-                Console.WriteLine($"✅ App found at: {pathInCurrentDir}");
-                return pathInCurrentDir;
-            }
-
-            // Strategy 2: Navigate from bin/Debug/net9.0 to project root (local execution)
-            var projectRoot = Directory.GetParent(currentDir)?.Parent?.Parent?.FullName;
-            if (projectRoot != null)
-            {
-                var pathInProjectRoot = Path.Combine(projectRoot, "App", appName);
-                Console.WriteLine($"🔍 Checking path in project root: {pathInProjectRoot}");
-                if (Directory.Exists(pathInProjectRoot))
-                {
-                    Console.WriteLine($"✅ App found at: {pathInProjectRoot}");
-                    return pathInProjectRoot;
-                }
-            }
-
-            // Strategy 3: Check if appName is already a full path
-            Console.WriteLine($"🔍 Checking if appName is full path: {appName}");
-            if (Directory.Exists(appName))
-            {
-                Console.WriteLine($"✅ App found at: {appName}");
-                return appName;
-            }
-
-            // Not found in any location
-            throw new FileNotFoundException(
-                $"App bundle not found in any of these locations:\n" +
-                $"  1. {pathInCurrentDir}\n" +
-                $"  2. {(projectRoot != null ? Path.Combine(projectRoot, "App", appName) : "N/A")}\n" +
-                $"  3. {appName}\n" +
-                $"Current directory: {currentDir}"
-            );
+            var projectRoot = Directory.GetParent(currentDir)?.Parent?.Parent?.FullName 
+                ?? throw new InvalidOperationException("Unable to determine project root directory");
+            
+            var appPath = Path.Combine(projectRoot, "App", appName);
+            
+            return Directory.Exists(appPath) 
+                ? appPath 
+                : throw new FileNotFoundException($"App bundle not found at: {appPath}");
         }
 
 
