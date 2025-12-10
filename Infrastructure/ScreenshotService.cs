@@ -4,12 +4,12 @@ using System.Text.RegularExpressions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.iOS;
 
-namespace AppMillionTest.Utilities
+namespace AppMillionTest.Infrastructure
 {
     /// <summary>
-    /// Helper class for capturing and saving screenshots during test execution.
+    /// Service for capturing and saving screenshots during test execution.
     /// </summary>
-    public static class ScreenshotHelper
+    public static class ScreenshotService
     {
         private const string ReportsFolder = "Reports";
 

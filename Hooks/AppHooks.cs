@@ -1,5 +1,5 @@
 using AppMillionTest.Drivers;
-using AppMillionTest.Utilities;
+using AppMillionTest.Infrastructure;
 using Reqnroll;
 using System;
 
@@ -46,7 +46,7 @@ namespace AppMillionTest.Hooks
                     var driver = IOSDriverFactory.Driver;
 
                     // Capture and save the screenshot
-                    var screenshotPath = ScreenshotHelper.CaptureScreenshot(
+                    var screenshotPath = ScreenshotService.CaptureScreenshot(
                         driver,
                         scenarioContext.ScenarioInfo.Title,
                         scenarioContext.StepContext.StepInfo.Text

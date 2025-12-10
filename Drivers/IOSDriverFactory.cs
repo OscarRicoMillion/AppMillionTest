@@ -72,8 +72,10 @@ namespace AppMillionTest.Drivers
 
             // Other helpful options
             options.AddAdditionalAppiumOption("newCommandTimeout", 300);
-            options.AddAdditionalAppiumOption("wdaLaunchTimeout", 30000);
-            options.AddAdditionalAppiumOption("wdaConnectionTimeout", 30000);
+            options.AddAdditionalAppiumOption("wdaLocalPort", 8100);
+            options.AddAdditionalAppiumOption("preventWDAAttachments", true);
+            options.AddAdditionalAppiumOption("wdaLaunchTimeout", 10000);
+            options.AddAdditionalAppiumOption("wdaConnectionTimeout", 10000);
             options.AddAdditionalAppiumOption("connectHardwareKeyboard", true);
             options.AddAdditionalAppiumOption("wdaStartupRetries", 3);
             options.AddAdditionalAppiumOption("wdaStartupRetryInterval", 5000);
