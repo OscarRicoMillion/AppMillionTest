@@ -31,6 +31,16 @@ namespace AppMillionTest.Drivers
         public const string MillionAndUpBundleId = "com.MillionAndUp.mau";
 
         /// <summary>
+        /// Indicates if running in a pipeline environment
+        /// </summary>
+        private static bool isPipeline = ConfigService.Instance.GetEnviromentConfig();
+
+        /// <summary>
+        /// Device configuration from appsettings / DevoiceConfiguration section
+        /// </summary>
+        private static DeviceConfiguration Deviceconfig = ConfigService.Instance.GetDeviceConfiguration();
+
+        /// <summary>
         /// Starts an Appium session if one is not already running.
         /// </summary>
         public static void StartSession()
@@ -38,16 +48,14 @@ namespace AppMillionTest.Drivers
             // Reuse the existing driver when possible
             if (_driver != null)
                 return;
-
-            bool isPipeline = ConfigService.Instance.GetEnviromentConfig();
-
+        
             // Configure Appium options
             var options = new AppiumOptions
             {
                 PlatformName = "iOS",
                 AutomationName = "XCUITest",
-                DeviceName = ConfigService.Instance.GetDeviceName(),
-                PlatformVersion = ConfigService.Instance.GetPlatformVersion()
+                DeviceName = Deviceconfig.DeviceName,
+                PlatformVersion = Deviceconfig.PlatformVersion
             };
 
             // Configure app installation based on environment
@@ -62,7 +70,7 @@ namespace AppMillionTest.Drivers
                 options.AddAdditionalAppiumOption("bundleId", MillionAndUpBundleId);
             }
 
-            options.AddAdditionalAppiumOption("udid", "9D760A97-D324-4C1B-BFB9-D0FCB18BF35D"); // iPhone 17 Pro Max
+            options.AddAdditionalAppiumOption("udid", Deviceconfig.Udid); // iPhone 17 Pro Max
 
             // Reset app data between scenarios to require fresh login each time
             options.AddAdditionalAppiumOption("noReset", false);

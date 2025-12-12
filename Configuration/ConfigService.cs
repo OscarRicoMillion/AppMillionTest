@@ -41,7 +41,7 @@ namespace AppMillionTest.Configuration
         public string GetUserName()
         {
             return Root.GetValue<string>("UserName")
-            ?? throw new InvalidOperationException("UserName is not configured in appsettings.json");   
+            ?? throw new InvalidOperationException("UserName is not configured in appsettings.json");
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace AppMillionTest.Configuration
         public string GetOtpCode()
         {
             return Root.GetValue<string>("OtpCode")
-            ?? "1111";    
+            ?? "1111";
         }
 
         /// <summary>
@@ -62,38 +62,36 @@ namespace AppMillionTest.Configuration
         public string GetAppPath()
         {
             var appName = Root.GetValue<string>("AppPath") ?? "MillionAndUp.app";
-            
+
             // Navigate from bin/Debug/net9.0 to project root
             var currentDir = Directory.GetCurrentDirectory();
-            var projectRoot = Directory.GetParent(currentDir)?.Parent?.Parent?.FullName 
+            var projectRoot = Directory.GetParent(currentDir)?.Parent?.Parent?.FullName
                 ?? throw new InvalidOperationException("Unable to determine project root directory");
-            
+
             var appPath = Path.Combine(projectRoot, "App", appName);
-            
-            return Directory.Exists(appPath) 
-                ? appPath 
+
+            return Directory.Exists(appPath)
+                ? appPath
                 : throw new FileNotFoundException($"App bundle not found at: {appPath}");
         }
-
-
+        
         /// <summary>
-        /// Gets the device name from appsettings.json.
+        /// Gets a specific configuration section from appsettings.json and avoid create isolated methods.
         /// </summary>
-        /// <returns>The configured device name.</returns>
-        public string  GetDeviceName()
+        /// <param name="sectionName">The name of the section.</param>
+        public IConfigurationSection GetSection(string sectionName)
         {
-            return Root.GetValue<string>("DeviceName")
-            ?? "iPhone 17 Pro Max";
+            return Root.GetSection(sectionName);
         }
 
         /// <summary>
-        /// Gets the platform version from appsettings.json.
+        /// Gets the device configuration from appsettings.json.
         /// </summary>
-        /// <returns>The configured platform version.</returns>
-        public string GetPlatformVersion()
+        /// <returns>The configured DeviceConfiguration object.</returns>
+        public DeviceConfiguration GetDeviceConfiguration()
         {
-            return Root.GetValue<string>("PlatformVersion")
-            ?? "26.1";
+            var DeviceSection = Root.GetSection("DeviceConfiguration");
+            return DeviceSection.Get<DeviceConfiguration>() ?? new DeviceConfiguration();
         }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace AppMillionTest.Configuration
         {
             return Root.GetValue<bool?>("RunConfiguration:IsPipeline")
             ?? true;
-                 
+
         }
 
         /// <summary>
@@ -114,7 +112,7 @@ namespace AppMillionTest.Configuration
         public string GetAzureStorageConnectionString()
         {
             return Root.GetValue<string>("AzureStorage:ConnectionString")
-                ?? throw new InvalidOperationException("AzureStorage:ConnectionString is not configured in appsettings.json");   
+                ?? throw new InvalidOperationException("AzureStorage:ConnectionString is not configured in appsettings.json");
         }
 
         /// <summary>
@@ -124,7 +122,7 @@ namespace AppMillionTest.Configuration
         public string GetAzureStorageContainerName()
         {
             return Root.GetValue<string>("AzureStorage:ContainerName")
-                ?? "mobile-test-screenshots";   
+                ?? "mobile-test-screenshots";
         }
 
     }

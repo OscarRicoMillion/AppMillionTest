@@ -22,7 +22,11 @@ dotnet test
 dotnet build
 \`\`\`
 
-## Project Structure
+# Open simulator
+xcrun simctl boot "iPhone 17 Pro Max"
+open -a Simulator
+
+## Project Structure -----------
 
 ### **Features/**
 Gherkin feature files written in English using BDD syntax with Given/When/Then steps.
