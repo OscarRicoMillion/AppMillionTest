@@ -13,7 +13,7 @@ Feature: Login Features
     Then the user should be redirected to the login screen
 
 
-  Scenario: Switch user status to available
+  Scenario: Switch user status
     Given the user opens the Million app
     When enters the username "<user>"
     And taps the Continue button
