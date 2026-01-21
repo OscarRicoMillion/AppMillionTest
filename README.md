@@ -67,6 +67,13 @@ open -a Simulator
 xcrun simctl list devices
 ```
 
+``` bash
+# Kill and reset simulator
+killall Simulator              # Force quit Simulator app
+xcrun simctl shutdown all      # Shutdown all running simulators
+xcrun simctl erase all         # Erase all simulator data
+```
+
 ------------------------------------------------------------------------
 
 ## 🧱 Project Structure
@@ -78,7 +85,7 @@ xcrun simctl list devices
      ├── Locators/            # Accessibility/XPath locators by screen
      ├── Drivers/             # IOSDriver lifecycle (Singleton)
      ├── Configuration/       # ConfigService, device models, settings
-     ├── Infrastructure/      # ScreenshotService, AzureBlobService
+     ├── Services/            # ScreenshotService, AzureBlobService
      ├── Utilities/           # Common helpers and utilities
      ├── Hooks/               # Test lifecycle hooks (session, scenario)
      ├── DataSource/          # Environment-based CSVs
@@ -183,6 +190,36 @@ DataSource/
 </details>
 ```
 
+------------------------------------------------------------------------
+
+## 📊 Allure Report Integration
+
+Allure Report provides visual and detailed test execution reports. For this project:
+- The `allureConfig.json` file is required if you use advanced features like custom parameters via `AllureLifecycle`.
+- Standard step and description annotations work without extra configuration.
+- To display custom parameters in the PARAMETERS section, use a global hook (e.g., `[AfterScenario]`) and `AllureLifecycle.Instance.UpdateTestCase`.
+- Keep `allureConfig.json` in the project root to avoid configuration errors.
+
+
+------------------------------------------------------------------------
+
+## 🧩 using `AddAllureParameters` on StepDefinitions
+
+El método `AddAllureParameters` permite agregar parámetros personalizados al reporte de Allure para el test case actual. Esto es útil para mostrar datos relevantes (como el texto de una nota, URLs, IDs, etc.) en la sección **PARAMETERS** del reporte.
+
+**Uso típico:**
+- Se llama desde un hook `[AfterScenario]` o desde utilidades globales.
+- Recorre el `ScenarioContext` y agrega cada clave/valor como parámetro.
+- Si el valor es una URL, lo agrega también como link en el reporte.
+
+**Ejemplo:**
+```csharp
+[AfterScenario]
+public void AddAllureParameters()
+{
+    CommonMethods.AddAllureParameters("noteText", scenarioContext["noteText"]);
+}
+```
 ------------------------------------------------------------------------
 
 ## 📌 Useful Commands (Quick Reference)

@@ -75,15 +75,15 @@ namespace AppMillionTest.Drivers
             // Reset app data between scenarios to require fresh login each time
             options.AddAdditionalAppiumOption("noReset", false);
 
-            options.AddAdditionalAppiumOption("useNewWDA", false); // Reuse WDA instance for speed            
+            options.AddAdditionalAppiumOption("useNewWDA", false); // when true - Force new WDA installation         
             options.AddAdditionalAppiumOption("autoDismissAlerts", true);
 
             // Other helpful options
             options.AddAdditionalAppiumOption("newCommandTimeout", 300);
             options.AddAdditionalAppiumOption("wdaLocalPort", 8100);
             options.AddAdditionalAppiumOption("preventWDAAttachments", true);
-            options.AddAdditionalAppiumOption("wdaLaunchTimeout", 10000);
-            options.AddAdditionalAppiumOption("wdaConnectionTimeout", 10000);
+            options.AddAdditionalAppiumOption("wdaLaunchTimeout", 60000);
+            options.AddAdditionalAppiumOption("wdaConnectionTimeout", 60000);
             options.AddAdditionalAppiumOption("connectHardwareKeyboard", true);
             options.AddAdditionalAppiumOption("wdaStartupRetries", 3);
             options.AddAdditionalAppiumOption("wdaStartupRetryInterval", 5000);

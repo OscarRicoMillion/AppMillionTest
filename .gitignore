@@ -16,6 +16,10 @@ TestResults/
 *.trx
 *.coverage
 
+# Allure
+allure-report/
+allure-results/
+
 # IDE
 .vs/
 .vscode/

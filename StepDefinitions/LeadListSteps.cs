@@ -2,11 +2,13 @@ using NUnit.Framework;
 using AppMillionTest.Drivers;
 using AppMillionTest.Pages;
 using Reqnroll;
-using OpenQA.Selenium.Appium; // if you rely on Reqnroll utilities
+using OpenQA.Selenium.Appium;
+using Allure.NUnit; // if you rely on Reqnroll utilities
 
 namespace AppMillionTest.StepDefinitions
 {
     [Binding]
+    [AllureNUnit]
     public class LeadListSteps
     {
         private readonly LeadListPage leadListPage;

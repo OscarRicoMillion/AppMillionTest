@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.iOS;
 
-namespace AppMillionTest.Infrastructure
+namespace AppMillionTest.Services
 {
     /// <summary>
     /// Service for capturing and saving screenshots during test execution.

@@ -3,11 +3,13 @@ using AppMillionTest.Drivers;
 using AppMillionTest.Pages;
 using Reqnroll;
 using OpenQA.Selenium.Appium;
-using AppMillionTest.Utilities; // si usas las utilidades de Reqnroll
+using AppMillionTest.Utilities;
+using Allure.NUnit; // si usas las utilidades de Reqnroll
 
 namespace AppMillionTest.StepDefinitions
 {
     [Binding]
+    [AllureNUnit]
     public class UserSteps
     {
         private readonly UserPage userPage;

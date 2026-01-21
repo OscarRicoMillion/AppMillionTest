@@ -3,7 +3,7 @@ using Azure.Storage.Blobs.Models;
 using AppMillionTest.Configuration;
 using Microsoft.AspNetCore.StaticFiles;
 
-namespace AppMillionTest.Infrastructure
+namespace AppMillionTest.Services
 {
     /// <summary>
     /// Service for uploading files to Azure Blob Storage.

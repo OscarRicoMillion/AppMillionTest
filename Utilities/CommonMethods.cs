@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Allure.Net.Commons;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
@@ -47,7 +48,7 @@ namespace AppMillionTest.Utilities
             }
             catch
             {
-                return false;                
+                return false;                                
             }
         }   
 
@@ -173,6 +174,46 @@ namespace AppMillionTest.Utilities
             throw new NoSuchElementException($"Element {locator} not found after scrolling {maxScrolls} times.");
         }
 
-        
+
+
+    /// <summary>
+    /// Adds a parameter to the Allure report for the current test case.
+    /// </summary>
+    /// <param name="name">The name of the parameter to add.</param>
+    /// <param name="value">The value of the parameter to add.</param>
+    public static void AddAllureParameters(string name, object value)
+    {
+        try
+        {
+            AllureLifecycle.Instance.UpdateTestCase(testResult =>
+            {
+                if (value != null && value.ToString().StartsWith("http"))
+                {
+                    testResult.links.Add(new Link
+                    {
+                        name = name,
+                        url = value.ToString(),
+                        type = "link"
+                    });
+                }
+                else
+                {
+                    testResult.parameters.Add(new Parameter
+                        {
+                            name = name,
+                            value = value?.ToString() ?? "null"
+                        });
+
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding Allure parameter: {ex.Message}");
+        }
     }
 }
+
+
+        
+    }

@@ -24,9 +24,9 @@ namespace AppMillionTest.Pages
         /// <summary>
         /// Selects the note option from the activity menu.
         /// </summary>
-        public void SelectNoteOption()
+        public void SelectActivityOption(string option)
         {
-            Click(ActivityDashBoardLocators.NoteOption);
+            Click(ActivityDashBoardLocators.ActivityOption(option));
         }
 
         /// <summary>

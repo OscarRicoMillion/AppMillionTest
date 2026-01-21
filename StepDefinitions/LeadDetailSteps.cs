@@ -3,10 +3,12 @@ using AppMillionTest.Drivers;
 using AppMillionTest.Pages;
 using Reqnroll;
 using OpenQA.Selenium.Appium;
+using Allure.NUnit;
 
 namespace AppMillionTest.StepDefinitions
 {
     [Binding]
+    [AllureNUnit]
     public class LeadDetailSteps
     {
         private readonly LeadDetailPage leadDetailPage;

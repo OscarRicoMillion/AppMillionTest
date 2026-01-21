@@ -5,11 +5,16 @@ using Reqnroll;
 using OpenQA.Selenium.Appium;
 using AppMillionTest.Utilities;
 using System.Globalization;
+using Allure.NUnit;
+using Allure.Commons;
+using Allure.NUnit.Attributes;
+
 
 
 namespace AppMillionTest.StepDefinitions
 {
     [Binding]
+    [AllureNUnit]
     public class ActivityDashBoardSteps : CommonMethods
     {
         private readonly ActivityDashBoardPage activityDashBoardPage;
@@ -30,14 +35,18 @@ namespace AppMillionTest.StepDefinitions
         [When("chooses the '(.*)' option")]
         public void WhenChoosesTheOption(string option)
         {
-            activityDashBoardPage.SelectNoteOption();
+            activityDashBoardPage.SelectActivityOption(option);
         }
 
         [When("types the note text '([^']*)'")]
         public void WhenTypesTheNoteText(string note)
         {
-            activityDashBoardPage.EnterNoteText(note);
+
+            AddAllureParameters("Note Text - ALLURE", note);
+
             scenarioContext["noteText"] = note;
+
+            activityDashBoardPage.EnterNoteText(note);
         }
 
         [When("hits the Save Notes button")]
@@ -50,7 +59,7 @@ namespace AppMillionTest.StepDefinitions
         [Then("the activity should show the note text, today's date, and the agent name '([^']*)'")]
         public void ThenTheActivityShouldShowTheNoteDetails(string agentName)
         {
-            
+
             var note = scenarioContext["noteText"] as string;
 
             // Get the text from the lead detail page and compare
@@ -75,7 +84,7 @@ namespace AppMillionTest.StepDefinitions
             GoBack();
         }
 
-        
-        
+
+
     }
 }

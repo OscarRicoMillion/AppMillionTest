@@ -1,7 +1,7 @@
 @DataSource:../../DataSource/UserInformation.csv
 Feature: Login Features
 
-
+  @login
   Scenario: Successful login and Sing out
     Given the user opens the Million app
     When enters the username "<user>"

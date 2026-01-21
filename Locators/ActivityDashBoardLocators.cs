@@ -8,7 +8,13 @@ namespace AppMillionTest.Locators
     /// </summary>
     public static class ActivityDashBoardLocators
     {
-        public static readonly By NoteOption = MobileBy.AccessibilityId("Note");
+        /// <summary>
+        /// Locator for selecting an activity option. NOTE/TASK
+        /// </summary>
+        /// <param name="option"></param>
+        /// <returns></returns>
+        public static By ActivityOption(string option) => MobileBy.AccessibilityId(option);
+
         public static readonly By NoteInput = MobileBy.AccessibilityId("Write a note");
     }
 }

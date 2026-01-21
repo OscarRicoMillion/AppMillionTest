@@ -1,5 +1,6 @@
+using Allure.Net.Commons;
 using AppMillionTest.Drivers;
-using AppMillionTest.Infrastructure;
+using AppMillionTest.Services;
 using Reqnroll;
 using System;
 
@@ -31,7 +32,7 @@ namespace AppMillionTest.Hooks
         }
 
         /// <summary>
-        /// Captures a screenshot when a step fails and uploads it to Azure Blob Storage.
+        /// Captures a screenshot when a step fails and uploads it to Azure Blob Storage and Allure report.
         /// </summary>
         /// <param name="scenarioContext">The current scenario context.</param>
         [AfterStep]
@@ -51,6 +52,17 @@ namespace AppMillionTest.Hooks
                         scenarioContext.ScenarioInfo.Title,
                         scenarioContext.StepContext.StepInfo.Text
                     );
+                    
+                    // Attach screenshot to Allure report when step fails
+                    try
+                    {
+                        AllureApi.AddAttachment($"Screenshot - {scenarioContext.StepContext.StepInfo.Text}", "image/png", screenshotPath);
+                        Console.WriteLine($"✅ Screenshot uploaded to Allure: {screenshotPath}");
+
+                    }catch (Exception ex)
+                    {
+                        Console.WriteLine($"⚠️ Error attaching screenshot to Allure report: {ex.Message}");
+                    }
 
                     // Store local path in ScenarioContext
                     if (!string.IsNullOrEmpty(screenshotPath))
